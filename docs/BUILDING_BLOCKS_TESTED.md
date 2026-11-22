@@ -26,7 +26,7 @@
 
 - Symbol: `SQLiteSessionStore` (`openminion.modules.session.storage/store.py:249`)
 - Verified behavior:
-  - Both in-memory (`:memory:`) and disk-backed (`.triage_demo/demo.db`) SQLite databases store sessions, `session_events`, and assistant turns across CLI invocations.
+  - Both in-memory (`:memory:`) and disk-backed (`.triage_demo/demo.db`) SQLite databases store sessions, `session_events`, and assistant turns across CLI invocations. During isolated `:memory:` runs, `SQLiteSessionStore.close()` leaves its `openminion-session-store-*` temporary storage directory on disk, filed upstream in [openminion/openminion#857](https://github.com/openminion/openminion/issues/857) with a fix branch ready at `princejain756/openminion@fix/session-memory-temp-root-cleanup` pending maintainer confirmation.
   - Note: Events are written to `session_events` (12 rows across 3 sessions), while `create_session()` writes an initial `agent.bound` bookkeeping event automatically.
   - Both `triage_issue` and `triage_release` persist the serialized `openminion-triage.v1` JSON report via `append_turn(..., "assistant", ...)` (`3` sessions and `3` saved turns verified in `.triage_demo/demo.db`).
 
