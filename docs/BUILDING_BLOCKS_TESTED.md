@@ -38,7 +38,7 @@
 ## 5. Lifecycle Phase Diagnostics (`PhaseStatus`, `coerce_phase_status`, `phase_status_payload`)
 
 - Symbols: `PhaseStatus`, `coerce_phase_status`, `phase_status_payload` (`openminion.modules.brain.diagnostics/status.py:115, 160, 232`)
-- Verified behavior: Issue runs emit `analyzing` -> `completed` and release runs emit `verifying` -> `completed`, each exposing language-neutral `facts` dictionaries in `diagnostics.phase_statuses`. `coerce_phase_status` safely accepts raw mapping inputs and defaults unknown status keys to `working`.
+- Verified behavior: Issue runs emit `analyzing` -> `completed` and release runs emit `verifying` -> `completed`, each exposing language-neutral `facts` dictionaries in `diagnostics.phase_statuses`. `coerce_phase_status` accepts valid raw mapping inputs and defaults unknown status keys to `working`, while negative counters, whitespace-padded `status_key` values, and string booleans in the fallback path trigger coercion bugs filed upstream in [openminion/openminion#856](https://github.com/openminion/openminion/issues/856) with a fix branch ready at `princejain756/openminion@fix/diagnostics-phase-status-coercion` pending maintainer confirmation.
 
 ## Verification Matrix
 
